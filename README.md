@@ -14,7 +14,7 @@ This skill isn't *claimed* to help — it's measured, in a companion open benchm
 `golangci-lint`) plus a hidden behavioral test the model never sees — no LLM-as-judge, no vibes.
 
 Across **54 production-Go cases** (samples=5, agentic self-correct), injecting the skill lifts
-correctness on **every model of two vendors, with zero regressions**:
+correctness on **every model of two vendors, with zero in-domain regressions**:
 
 - **Anthropic** — Haiku **+20.0 pp**, Sonnet **+16.7 pp**, Opus **+14.1 pp**
 - **OpenAI** — GPT‑5.4‑nano **+26.3 pp**, GPT‑5.4‑mini **+20.7 pp**, GPT‑5.5 **+12.6 pp**
@@ -33,6 +33,7 @@ go-mastery/
 ├── SKILL.md        # Entry point: core rules + a routing table (always loaded when the skill triggers)
 ├── INDEX.md        # 200+ topic → reference#anchor map for on-demand lookups
 ├── references/     # 36 deep-dive files, lazy-loaded as needed
+├── .claude-plugin/ # Claude Code plugin + marketplace manifests
 ├── LICENSE         # MIT
 ├── README.md
 └── .gitignore
@@ -69,7 +70,7 @@ ln -s /path/to/go-mastery ~/.claude/skills/go-mastery
 Once this folder is pushed to a public repo, the universal [`skills`](https://skills.sh) CLI installs it into any supported agent:
 
 ```bash
-npx skills add https://github.com/mythicalhacker/go-mastery
+npx skills add mythicalhacker/go-mastery
 ```
 
 Gemini CLI users:
