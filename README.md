@@ -78,6 +78,15 @@ Gemini CLI users:
 gemini extensions install https://github.com/mythicalhacker/go-mastery
 ```
 
+### Marketplace install (Claude Code plugin)
+
+This repo doubles as a Claude Code plugin marketplace. Add it once, then install:
+
+```bash
+/plugin marketplace add mythicalhacker/go-mastery
+/plugin install go-mastery@go-mastery
+```
+
 ### ChatGPT / OpenAI
 
 ChatGPT doesn't consume `SKILL.md` skills natively. Use it one of these ways:

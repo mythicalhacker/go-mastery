@@ -1,0 +1,13 @@
+{
+  "name": "go-mastery",
+  "version": "0.1.0",
+  "description": "Production-grade, idiomatic Go for AI coding agents — an Agent Skill (Go 1.22–1.26), measured in a companion benchmark: +12–26pp correctness across Claude & GPT-5 with zero regressions.",
+  "author": {
+    "name": "Mythical Hacker",
+    "url": "https://github.com/mythicalhacker"
+  },
+  "homepage": "https://github.com/mythicalhacker/go-mastery",
+  "repository": "https://github.com/mythicalhacker/go-mastery",
+  "license": "MIT",
+  "keywords": ["go", "golang", "agent-skill", "claude-code", "go-best-practices"]
+}
