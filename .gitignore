@@ -1,0 +1,18 @@
+# IDE / editor cruft
+.idea/
+.vscode/
+*.iml
+*.swp
+*~
+
+# Agent local settings (keep these out of the published skill)
+.claude/settings.local.json
+
+# OS cruft
+.DS_Store
+.AppleDouble
+Thumbs.db
+
+# Probes / scratch
+*.writetest
+*.tmp
