@@ -80,6 +80,90 @@ def test_fence_not_parsed():
     print("  PASS: fenced anchor ignored")
 
 
+def test_long_fence():
+    """A 5-backtick fence must not be closed by a 3-backtick line."""
+    with tempfile.TemporaryDirectory() as tmp:
+        tmp = Path(tmp)
+        make_repo(
+            tmp,
+            "- **Topic** → test.md#trapped (description)\n",
+            "test.md",
+            (
+                "## Intro {#intro}\n\n"
+                "`````markdown\n"
+                "## Inner sample {#trapped}\n"
+                "```\n"
+                "still inside the 5-backtick fence\n"
+                "`````\n"
+            ),
+        )
+        rc, _, _ = run_checker(tmp)
+        assert rc == 1, f"expected exit 1 (anchor inside long fence), got {rc}"
+    print("  PASS: long fence (5-backtick) not closed by short (3-backtick)")
+
+
+def test_tilde_fence():
+    """A ~~~ fence must not be closed by a ``` line."""
+    with tempfile.TemporaryDirectory() as tmp:
+        tmp = Path(tmp)
+        make_repo(
+            tmp,
+            "- **Topic** → test.md#tilde-only (description)\n",
+            "test.md",
+            (
+                "## Intro {#intro}\n\n"
+                "~~~\n"
+                "## Hidden {#tilde-only}\n"
+                "```\n"
+                "still inside tilde fence\n"
+                "~~~\n"
+            ),
+        )
+        rc, _, _ = run_checker(tmp)
+        assert rc == 1, f"expected exit 1 (anchor inside tilde fence), got {rc}"
+    print("  PASS: tilde fence not closed by backtick")
+
+
+def test_indented_fence():
+    """A fence indented up to 3 spaces must still be recognized."""
+    with tempfile.TemporaryDirectory() as tmp:
+        tmp = Path(tmp)
+        make_repo(
+            tmp,
+            "- **Topic** → test.md#indented-only (description)\n",
+            "test.md",
+            (
+                "## Intro {#intro}\n\n"
+                "   ```\n"
+                "## Hidden {#indented-only}\n"
+                "   ```\n"
+            ),
+        )
+        rc, _, _ = run_checker(tmp)
+        assert rc == 1, f"expected exit 1 (anchor inside indented fence), got {rc}"
+    print("  PASS: indented fence (3 spaces) recognized")
+
+
+def test_ref_in_fenced_index():
+    """A reference inside a fenced block in INDEX.md must not be followed."""
+    with tempfile.TemporaryDirectory() as tmp:
+        tmp = Path(tmp)
+        make_repo(
+            tmp,
+            (
+                "- **Real** → test.md#real (a real reference)\n"
+                "```\n"
+                "- **Fake** → test.md#phantom (inside a code block)\n"
+                "```\n"
+            ),
+            "test.md",
+            "## Section {#real}\n",
+        )
+        rc, _, _ = run_checker(tmp)
+        assert rc == 0, f"expected exit 0 (phantom ref in fence ignored), got {rc}"
+    print("  PASS: reference inside INDEX.md fence ignored")
+
+
 def test_missing_file():
     """A reference to a nonexistent file must fail."""
     with tempfile.TemporaryDirectory() as tmp:
@@ -115,6 +199,10 @@ if __name__ == "__main__":
     test_valid_anchor()
     test_broken_anchor()
     test_fence_not_parsed()
+    test_long_fence()
+    test_tilde_fence()
+    test_indented_fence()
+    test_ref_in_fenced_index()
     test_missing_file()
     test_no_refs_warns()
-    print(f"\nAll 5 tests passed.")
+    print(f"\nAll 9 tests passed.")
