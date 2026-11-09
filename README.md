@@ -8,23 +8,24 @@ The definitive Go (Golang) development skill for AI coding agents. It produces p
 
 ## Measured impact
 
-This skill isn't *claimed* to help — it's measured, in a companion open benchmark,
-[**go-mastery-evals**](https://github.com/mythicalhacker/go-mastery-evals). Identical prompts run *with* and
-*without* the skill, graded by the Go toolchain itself (`go build` / `go vet` / `go test` /
-`golangci-lint`) plus a hidden behavioral test the model never sees — no LLM-as-judge, no vibes.
+The benchmark compared six models on 54 Go tasks, with five samples per task in each condition.
+Both groups received the same task prompt and could make up to two repairs using toolchain feedback.
+The skill group also received `SKILL.md` and the references selected for that task. Hidden behavioral
+tests counted toward the final grade. Their output was withheld during repairs.
 
-Across **54 production-Go cases** (samples=5, agentic self-correct), injecting the skill lifts
-correctness on **every model of two vendors, with zero in-domain regressions**:
+The final sample pass rate increased on all six models:
 
-- **Anthropic** — Haiku **+20.0 pp**, Sonnet **+16.7 pp**, Opus **+14.1 pp**
-- **OpenAI** — GPT‑5.4‑nano **+26.3 pp**, GPT‑5.4‑mini **+20.7 pp**, GPT‑5.5 **+12.6 pp**
+- **Anthropic** — Haiku **+20.0 percentage points** (197/270 to 251/270), Sonnet **+16.7**, Opus **+14.1**.
+- **OpenAI** — GPT‑5.4‑nano **+26.3 percentage points**, GPT‑5.4‑mini **+20.7**, GPT‑5.5 **+12.6**.
 
-It also leads every other Go skill benchmarked — JetBrains `go-modern-guidelines`
-(+6.7 / +5.2 / +4.5 pp, never behind on a single case) and the leading community-authored Go skill
-(+6.3 pp) — and stays neutral out of its domain (do-no-harm). On strong models, where pass/fail
-saturates, a deterministic quality score still shows the code is more idiomatic. Full methodology,
-per-tier tables, head-to-heads, and reproduction:
-**[go-mastery-evals/RESULTS.md](https://github.com/mythicalhacker/go-mastery-evals/blob/main/RESULTS.md)**.
+Seven model/task pairs had fewer passing samples with the skill. All pairs with at least three
+of five samples passing without the skill still had at least three passing with it.
+
+An earlier build scored 4.5 to 6.7 percentage points higher than JetBrains `go-modern-guidelines`
+across three Claude models and 6.3 points higher than a community skill on Sonnet.
+On the external Aider polyglot Go track (36 Exercism puzzles, 108 samples per model per condition),
+Haiku passed 15 samples with the skill and 13 without. Sonnet passed 59 versus 60, and Opus 63
+versus 64. [Full benchmark results](https://github.com/mythicalhacker/go-mastery-evals/blob/717d447b96215a05520365e9a21098c9ab687aa3/RESULTS.md) · [External sample grades](https://github.com/mythicalhacker/go-mastery-evals/blob/717d447b96215a05520365e9a21098c9ab687aa3/baselines/deepened-v2-aider/results.json)
 
 ## What's in here
 
